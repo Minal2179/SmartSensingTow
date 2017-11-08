@@ -5,10 +5,10 @@ var User = require('../models/user');
 var path = require('path');
 
 
+
 // GET route for reading data
 router.get('/', function (req, res, next) {
   console.log("I am here");
-  console.log(path.join(__dirname + '/views/index.html'));
   return res.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
@@ -76,6 +76,7 @@ router.get('/profile', function (req, res, next) {
         } else {
           // return res.send('<h1>Name: </h1>' + user.username + '<h2>Mail: </h2>' + user.email + '<br><a type="button" href="/logout">Logout</a>')
           return res.render(path.resolve(__dirname + '/../views/Admin.ejs'),{user:user});
+
         }
       }
     });
