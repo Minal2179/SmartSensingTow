@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html style='overflow: hidden;'>
+<head><title>Smart Tow</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../webpage/css/font-awesome.min.css">
+<link rel="stylesheet" href="../webpage/css/dropdownmenu.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+body,h1 {font-family: "Raleway", Arial, sans-serif}
+h1 {letter-spacing: 6px}
+.w3-row-padding img {margin-bottom: 12px}
+
+</style>
+</head>
+<body style="background: black;color: white">
+<header class="w3-panel w3-center w3-opacity">
+	 <h1 class="w3-xlarge">Towing Company
+	<div class="w3-bar w3-border" style="float: right;"><a href="MainPage1.html" class="w3-bar-item w3-button" style="float: right;font-size: small;">Back</a>
+      </div>
+    <div class="w3-padding-32">
+    <div class="w3-bar w3-border">
+    	
+      <a href="ParkingDetails.html" class="w3-bar-item w3-button" style="font-size: small;">Parking Spaces</a>
+      <a href="TowingCompanyDetails.html" class="w3-bar-item w3-button w3-white" style="font-size: small;">Towing Company Details</a>
+      </div>
+  </div>
+   <button onclick="document.getElementById('add').style.display='block'" class="w3-button w3-black">Add</button>
+</header>
+<!-- !PAGE CONTENT! -->
+<div class="w3-content" style="max-width:1500px">
+<div class="w3-container">
+
+  <div id="add" class="w3-modal">
+    <div class="w3-modal-content" style="width: fit-content;">
+      <div class="w3-container">
+        <span onclick="document.getElementById('add').style.display='none'" class="w3-button w3-display-topright" style="background-color: #8c8b8b;">&times;</span>
+        <br><h1 style="color: black"> Add Towing Company Details</h1>
+        <form action="/addTow" method="post">
+        <br><table style="color: black">
+        		<tr>
+        			<td>Towing Company Name:
+        			</td>
+        			<td> <input type="text" name="name" value="">
+        			</td>
+        		</tr><tr><td><br> </td></tr>
+        		<tr>
+        			<td>Location:
+        			</td>
+        			<td><input type="text" name="location" value="">
+        			</td>
+        		</tr><tr><td><br> </td></tr>
+        		<tr>
+        			<td>Address:
+        			</td>
+        			<td><input type="textarea" name="address" value="">
+        			</td>
+        		</tr><tr><td><br> </td></tr>
+        		<tr>
+        			<td>Contact Details:
+        			</td>
+        			<td><input type="text" name="contact" value="">
+        			</td>
+        		</tr>
+        	</table>
+        	<br>
+        	<input type="submit" name="Submit"><br><br>
+        	</form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<% for(var i=0; i<TowCompany.length; i++) {%>
+<button class="accordion" id="<%= TowCompany[i].name %>" onclick="buttonclicked(this.id)"><span><%= TowCompany[i].name %></span></button>
+<div class="panel">
+  <p>Address: <span><%= TowCompany[i].address %></span><br>Contact: <span><%= TowCompany[i].contact %></span></p>
+</div>
+<% } %>
+
+
+<!-- Footer -->
+<script src="../webpage/js/dropdownmenu.js"></script>
+
+<!-- The Modal -->
+
+</body>
+</html>
