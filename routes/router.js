@@ -62,50 +62,7 @@ router.post('/', function (req, res, next) {
     return next(err);
   }
 })
-//post add tow company details
-//POST route for updating data
-router.post('/addTow', function (req, res, next) {
 
-  console.log(req.body.name);
-  if (req.body.name &&
-    req.body.location &&
-    req.body.address &&
-    req.body.contact) {
-
-    var towData = 
-       {
-      name: req.body.name,
-      location: req.body.location,
-      address: req.body.address,
-      contact: req.body.contact,
-    };
-    
-
-    // towData.save(function(err){
-    //   if(err) throw err;
-    //   console.log("towdata created");
-    // });
-
-    TowCompany.create(towData, function (error, towdata) {
-      if (error) {
-        return next(error);
-      } else {
-        console.log(towdata);
-        return res.redirect('/addTow');
-      } 
-    });
-  }
-
-});
-
-router.get('/addTow', function (req, res, next) {
-  TowCompany.find({}, function(err, towdata) {
-    if(err) return console.log(err);
-    console.log(towdata);
-    return res.render(path.resolve(__dirname + '/../views/TowingCompanyDetails.ejs'),{TowCompany:towdata});
-  })
-  
-});
 
 // GET route after registering
 router.get('/profile', function (req, res, next) {
@@ -127,6 +84,53 @@ router.get('/profile', function (req, res, next) {
     });
 });
 
+//post add tow company details
+//POST route for updating data
+router.post('/addTow', function (req, res, next) {
+
+  console.log(req.body.name);
+  if (req.body.name &&
+    req.body.location &&
+    req.body.address &&
+    req.body.contact) {
+
+    var towData = 
+       {
+      name: req.body.name,
+      location: req.body.location,
+      address: req.body.address,
+      contact: req.body.contact,
+    };
+    
+
+    TowCompany.create(towData, function (error, towdata) {
+      if (error) {
+        return next(error);
+      } else {
+        console.log(towdata);
+        return res.redirect('/addTow');
+      } 
+    });
+  }
+
+});
+
+router.get('/addTow', function (req, res, next) {
+  TowCompany.find({}, function(err, towdata) {
+    if(err) return console.log(err);
+    console.log(towdata);
+    return res.render(path.resolve(__dirname + '/../views/TowingCompanyDetails.ejs'),{TowCompany:towdata});
+  }) 
+});
+
+router.get('/addTow', function (req, res, next) {
+  TowCompany.find({}, function(err, towdata) {
+    if(err) return console.log(err);
+    console.log(towdata);
+    return res.render(path.resolve(__dirname + '/../views/TowingCompanyDetails.ejs'),{TowCompany:towdata});
+  }) 
+});
+
 // GET for logout logout
 router.get('/logout', function (req, res, next) {
   if (req.session) {
@@ -140,5 +144,7 @@ router.get('/logout', function (req, res, next) {
     });
   }
 });
+
+
 
 module.exports = router;

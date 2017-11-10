@@ -1,28 +1,24 @@
 var mongoose = require('mongoose');
 
-var towingSchema = new mongoose.Schema({
-    name: {
+var parkingSpaceSchema = new mongoose.Schema({
+  name: {
     type: String,
     unique: false,
     required: true,
     trim: true
   },
-  contact: {
+  zone: {
     type: String,
     unique: true,
     required: true,
     trim: true
   },
-  address: {
-    type: String,
+  numberOfLots: {
+    type: Number,
     required: true,
     maxlength:40,
     trim:true
 
-  },
-  location: {
-    type: String,
-    required: true,
   }
 });
 
@@ -33,6 +29,6 @@ var towingSchema = new mongoose.Schema({
 // });
 
 
-var towCompany = mongoose.model('towCompany', towingSchema);
-module.exports = towCompany;
+var parkingSpace = mongoose.model('parkingSpace', parkingSpaceSchema);
+module.exports = parkingSpace;
 

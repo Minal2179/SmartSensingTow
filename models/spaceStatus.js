@@ -1,28 +1,36 @@
 var mongoose = require('mongoose');
 
-var towingSchema = new mongoose.Schema({
-    name: {
+var spaceStatusSchema = new mongoose.Schema({
+  zoneName: {
     type: String,
     unique: false,
     required: true,
     trim: true
+  }
+  lotNumber: {
+    type: Number,
+    unique: false,
+    required: true,
+    trim: true
   },
-  contact: {
+  status: {
     type: String,
     unique: true,
     required: true,
     trim: true
   },
-  address: {
-    type: String,
+  carInTime: {
+    type: Date,
     required: true,
-    maxlength:40,
     trim:true
-
   },
-  location: {
-    type: String,
+  hoursOccupied: {
+    type: Date,
     required: true,
+    trim:true
+  },
+  parkingSpace: {
+    type: Schema.Types.ObjectId
   }
 });
 
@@ -33,6 +41,6 @@ var towingSchema = new mongoose.Schema({
 // });
 
 
-var towCompany = mongoose.model('towCompany', towingSchema);
-module.exports = towCompany;
+var spaceStatus = mongoose.model('spaceStatus', spaceStatusSchema);
+module.exports = spaceStatus;
 
