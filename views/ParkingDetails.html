@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head><title>Smart Tow</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../webpage/css/font-awesome.min.css">
+<link rel="stylesheet" href="../webpage/css/dropdownmenu.css">
+<style>
+body,h1 {font-family: "Raleway", Arial, sans-serif}
+h1 {letter-spacing: 6px}
+.w3-row-padding img {margin-bottom: 12px}
+</style>
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+}
+
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color on hover */
+li a:hover {
+    background-color: #555;
+    color: white;
+}
+li
+{
+	background-color: #919191;
+}
+#iframeBody
+{
+	background:url('images/road.jpg') no-repeat 89%
+}
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+}
+</style>
+
+<link rel="stylesheet" href="../webpage/css/dropdownmenu.css">
+</head>
+<body style="background: black;color: white">
+  <header class="w3-panel w3-center w3-opacity">
+	 <h1 class="w3-xlarge">Parking Space
+	<div class="w3-bar w3-border" style="float: right;"><a href="MainPage1.html" class="w3-bar-item w3-button" style="float: right;font-size: small;">Back</a>
+    </div>
+    <div class="w3-padding-32">
+    <div class="w3-bar w3-border">
+    	
+      <a href="ParkingDetails.html" class="w3-bar-item w3-button w3-white" style="font-size: small;">Parking Spaces</a>
+      <a href="TowingCompanyDetails.html" class="w3-bar-item w3-button " style="font-size: small;">Towing Company Details</a>
+    </div>
+    <div class="w3-bar w3-border" style="float: right;">
+    	<input type="button" class="w3-bar-item w3-button" id="toggle" value='Grid' style="font-size: small;" onclick="toggleView(this.id)"></input>    
+    </div>
+  </div></h1>
+</header>
+<div style="margin-top: -30px">
+	<iframe height="435px" width="83%" src="demo_iframe.htm" name="iframe_a" style="margin-left: 16%" id="iframeBody"></iframe>
+<div style="width: 15%;height: 100%;margin-left: 5px; margin-top:-436px;background-color: #919191;">
+	<button class="accordion" id="scu" onclick="buttonclicked(this.id)">Santa Clara University</button>
+<div class="panel">
+<!-- 	<button>West Side</button>
+	<button>East Side</button>
+	<button>North Side</button>
+	<button>South Side</button> -->
+	<a class="w3-bar-item w3-button" name="list" style="font-size: small;  width: -webkit-fill-available; " target="iframe_a" href="westside.html" 
+  id="westside"  onclick="changeColor(this.id)">West Side</a>
+  <a class="w3-bar-item w3-button" name="list" style="font-size: small; width: -webkit-fill-available;" href="eastside.html" target="iframe_a"
+ id="eastside" onclick="changeColor(this.id)">East Side</a>
+  <a class="w3-bar-item w3-button" name="list" style="font-size: small; width: -webkit-fill-available;" href="northside.html" target="iframe_a"
+ id="northside" onclick="changeColor(this.id)">North Side</a>
+ <a class="w3-bar-item w3-button " name="list" style="font-size: small; width: -webkit-fill-available;" href="southside.html" target="iframe_a"
+ id="southside" onclick="changeColor(this.id)">South Side</a>
+
+</div>
+ <button class="accordion" id="pc" onclick="buttonclicked(this.id)">Par Central Apartments</button>
+<div class="panel">
+  <a class="w3-bar-item w3-button" name="list" style="font-size: small; width: -webkit-fill-available; " href="frontside.html" target="iframe_a" class="button" id="frontside" onclick="changeColor(this.id)">Front Side</a>
+  <a class="w3-bar-item w3-button" name="list" style="font-size: small; width: -webkit-fill-available; " href="backside.html" target="iframe_a" class="button" id="backside" onclick="changeColor(this.id)">Back Side</a>
+</div>
+<button class="accordion" id="Contact" onclick="buttonclicked(this.id)">Contact us</button>
+<div class="panel">
+ <a class="w3-bar-item w3-button" name="list" style="font-size: small; width: -webkit-fill-available; " href="contactDetails.html" target="iframe_a" class="button" id="mphone" onclick="changeColor(this.id)">Mobile Phone</a>
+</div>
+<input type="hidden" name="selectedValue" id="selectedValue" value="">
+</div>
+</div>
+<script src="../webpage/js/dropdownmenu.js"></script>
+</body>
+</html>

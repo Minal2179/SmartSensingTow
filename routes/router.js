@@ -146,7 +146,6 @@ router.post('/parkingDetails', function (req, res, next) {
 router.get('/parkingSpace', function (req, res, next) {
   console.log("in space status get")
   console.log(req);
-  console.log(res);
   SpaceStatus.find({}, function(err, parkdata) {
     if(err) return console.log(err);
     console.log(parkdata);

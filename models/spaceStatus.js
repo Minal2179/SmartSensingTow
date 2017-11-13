@@ -1,3 +1,4 @@
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var spaceStatusSchema = new mongoose.Schema({
@@ -42,4 +43,3 @@ var spaceStatusSchema = new mongoose.Schema({
 
 var spaceStatus = mongoose.model('spaceStatus', spaceStatusSchema);
 module.exports = spaceStatus;
-
