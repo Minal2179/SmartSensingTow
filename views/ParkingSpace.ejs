@@ -15,9 +15,17 @@
 </style>
 </head>
 <body>
-<table id="northsideGrid">
+	<% for(var i=0; i<SpaceStatus.length; i++) {%>
+<a class="w3-bar-item w3-button " name="list" style="font-size: small; width: -webkit-fill-available;" href="/parkingSpace" target="iframe_a" id='<%= SpaceStatus[i].zoneName %>'  value="<%= SpaceStatus[i].zoneName %>"><%= SpaceStatus [i].zoneName %></a>
+<% } %>
+<table>
+
+		<tr>
+	<td style="height:80px">
+	</td>
+</tr>
 <tr>
-	<td id="trShow">1
+	<td id="trShow">
 	</td>
 	<td id="trHide">
 	</td>
@@ -57,50 +65,6 @@
 	</td>
 </tr>
 <tr>
-	<td style="height:80px">
-	</td>
-</tr>
-<tr>
-	<td  id="trShow">1
-	</td>
-	<td  id="trHide">
-	</td>
-	<td  id="trShow">2
-	</td>
-	<td  id="trHide">
-	</td>
-	<td  id="trShow">3
-	</td>
-	<td  id="trHide">
-	</td>
-	<td  id="trShow">4
-	</td>
-	<td  id="trHide">
-	</td>
-	<td  id="trShow">5
-	</td>
-	<td  id="trHide">
-	</td>
-	<td  id="trShow">6
-	</td>
-	<td  id="trHide">
-	</td>
-	<td  id="trShow">7
-	</td>
-	<td  id="trHide">
-	</td>
-	<td  id="trShow">8
-	</td>
-	<td  id="trHide">
-	</td>
-	<td  id="trShow">9
-	</td>
-	<td  id="trHide">
-	</td>
-	<td  id="trShow">10
-	</td>
-	</tr>
-	<tr>
 	<td style="height:80px">
 	</td>
 </tr>

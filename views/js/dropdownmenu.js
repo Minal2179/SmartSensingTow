@@ -32,8 +32,25 @@ function changeColor(id)
     accB[i].style='background-color:white;';
   }
     x.style='background-color:#919191;';
+    document.getElementById("parkSpace").value=id;
     document.getElementById("selectedValue").value=id;
     document.getElementById("toggle").value="Grid";
+}
+function callPostPage(id)
+{
+  $.ajax({
+        type: 'GET',
+        url: '/parkingSpace',
+        data: {
+          theparkspace: id,
+        },
+        success: function(data){
+            console.log(data);
+        },
+        error: function(){
+            alert('No data');
+        }
+    });
 }
 function toggleView(id)
 {

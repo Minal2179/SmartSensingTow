@@ -3,6 +3,8 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var TowCompany = require('../models/towCompany');
+var ParkingSpace = require('../models/parkingSpace');
+var SpaceStatus = require('../models/spaceStatus');
 var path = require('path');
 var app = require('express');
 
@@ -106,7 +108,62 @@ router.get('/addTow', function (req, res, next) {
   })
   
 });
+router.get('/parkingDetails', function (req, res, next) {
+  ParkingSpace.find({}, function(err, parkdata) {
+    if(err) return console.log(err);
+    console.log(parkdata);
+    return res.render(path.resolve(__dirname + '/../views/ParkingDetails.ejs'),{ParkingSpace:parkdata});
+  })
+  
+});
+router.post('/parkingDetails', function (req, res, next) {
+  console.log('in parkingDetails post');
+/*  console.log(req.body.name);
+  if (req.body.name &&
+    req.body.location &&
+    req.body.address &&
+    req.body.contact) {
 
+    var towData = 
+       {
+      name: req.body.name,
+      location: req.body.location,
+      address: req.body.address,
+      contact: req.body.contact,
+    };*/
+    
+/*    TowCompany.create(towData, function (error, towdata) {
+      if (error) {
+        return next(error);
+      } else {
+        console.log(towdata);
+        return res.redirect('/addTow');
+      } 
+    });*/
+  /*}*/
+
+});
+router.get('/parkingSpace', function (req, res, next) {
+  console.log("in space status get")
+  console.log(req);
+  console.log(res);
+  SpaceStatus.find({}, function(err, parkdata) {
+    if(err) return console.log(err);
+    console.log(parkdata);
+    return res.render(path.resolve(__dirname + '/../views/ParkingSpace.ejs'),{SpaceStatus:parkdata});
+  })
+  
+});
+
+/*router.post('/parkingSpace', function (req, res, next) {
+  console.log("in space status post")
+SpaceStatus.find({}, function(err, parkdata) {
+    if(err) return console.log(err);
+    console.log(parkdata);
+    return res.render(path.resolve(__dirname + '/../views/ParkingSpace.ejs'),{SpaceStatus:parkdata});
+  })
+
+});*/
 // GET route after registering
 router.get('/profile', function (req, res, next) {
   User.findById(req.session.userId)
