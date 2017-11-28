@@ -95,7 +95,32 @@ body {
 	-moz-transition:0.5s all;
 	-ms-transition:0.5s all;
 }
-
+.sub-main input[type="button"] {
+    color: white;
+    background: #f9ea36;
+    border: none;
+    padding: 14px 50px;
+    font-size: 22px;
+    border-radius: 2px;
+    margin: 17px;
+	font-family: 'Lato', sans-serif;
+	cursor:pointer;
+	text-transform:uppercase;
+	transition:0.5s all;
+	-webkit-transition:0.5s all;
+	-o-transition:0.5s all;
+	-moz-transition:0.5s all;
+	-ms-transition:0.5s all;
+}
+.sub-main input[type="button"]:hover {
+    background: #d9edf7;
+    color: black;
+	transition:0.5s all;
+	-webkit-transition:0.5s all;
+	-o-transition:0.5s all;
+	-moz-transition:0.5s all;
+	-ms-transition:0.5s all;
+}
 /*--//main--*/
 
 /*--footer--*/

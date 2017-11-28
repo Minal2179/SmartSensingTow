@@ -24,9 +24,9 @@ h1 {letter-spacing: 6px}
     <div class="w3-bar w3-border">
     	
       <a href='/parkingDetails' class="w3-bar-item w3-button" style="font-size: small;">Parking Spaces</a>
-     <a href="/addTow" class="w3-bar-item w3-button w3-white" style="font-size: small;">Towing Company Details</a>
-     <a href="/addZone" class="w3-bar-item w3-button" style="font-size: small;">Zone Details</a>
-     
+      <a href="/addTow" class="w3-bar-item w3-button" style="font-size: small;">Towing Company Details</a>
+      <a href="/addZone" class="w3-bar-item w3-button w3-white" style="font-size: small;">Zone Details</a>
+      
       </div>
   </div>
    <button onclick="document.getElementById('add').style.display='block'" class="w3-button w3-black">Add</button>
@@ -39,34 +39,15 @@ h1 {letter-spacing: 6px}
     <div class="w3-modal-content" style="width: fit-content;">
       <div class="w3-container">
         <span onclick="document.getElementById('add').style.display='none'" class="w3-button w3-display-topright" style="background-color: #8c8b8b;">&times;</span>
-        <br><h1 style="color: black"> Add Towing Company Details</h1>
-
-        <form action="/addTow" method="post">
+        <br><h1 style="color: black"> Add Zone</h1>
+        <form action="/addZone" method="post">
         <br><table style="color: black">
         		<tr>
-        			<td>Towing Company Name:
+        			<td>Zone Name:
         			</td>
         			<td> <input type="text" name="name" value="">
         			</td>
         		</tr><tr><td><br> </td></tr>
-        		<tr>
-        			<td>Location:
-        			</td>
-        			<td><input type="text" name="location" value="">
-        			</td>
-        		</tr><tr><td><br> </td></tr>
-        		<tr>
-        			<td>Address:
-        			</td>
-        			<td><input type="textarea" name="address" value="">
-        			</td>
-        		</tr><tr><td><br> </td></tr>
-        		<tr>
-        			<td>Contact Details:
-        			</td>
-        			<td><input type="text" name="contact" value="">
-        			</td>
-        		</tr>
         	</table>
         	<br>
         	<input type="submit" name="Submit"><br><br>
@@ -76,16 +57,49 @@ h1 {letter-spacing: 6px}
   </div>
 </div>
 </div>
-<% for(var i=0; i<TowCompany.length; i++) {%>
-<button class="accordion" id="<%= TowCompany[i].name %>" onclick="buttonclicked(this.id)"><span><%= TowCompany[i].name %></span></button>
+<div class="w3-content" style="max-width:1500px">
+<div class="w3-container">
+
+  <div id="addP" class="w3-modal">
+    <div class="w3-modal-content" style="width: fit-content;">
+      <div class="w3-container">
+        <span onclick="document.getElementById('addP').style.display='none'" class="w3-button w3-display-topright" style="background-color: #8c8b8b;">&times;</span>
+        <br><h1 style="color: black"> Add Parking Details</h1>
+        <form action="/addZoneP" method="post">
+        <br><table style="color: black">
+            <tr>
+              <td>Parking Space Name:
+              </td>
+              <td> <input type="text" name="name" value="">
+              </td>
+            </tr><tr><td><br> </td></tr>
+            <tr>
+              <td>Number of Lots:
+              </td>
+              <td> <input type="text" name="noOfLots" value="">
+              </td>
+            </tr>
+            <tr>
+              <td> <input type="text" name="zoneName" value="">
+              </td>
+            </tr>
+          </table>
+          <br>
+          <input type="submit" name="Submit"><br><br>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<% for(var i=0; i<Zone.length; i++) {%>
+<button class="accordion" id="<%= Zone[i].name %>" onclick="buttonclicked(this.id)"><span><%= Zone[i].name %></span></button>
 <div class="panel">
-  <p>Address: <span><%= TowCompany[i].address %></span><br>Contact: <span><%= TowCompany[i].contact %></span></p>
+  <p>Name: <span><%= Zone[i].name %></span>:
+    <button onclick="document.getElementById('addP').style.display='block'" class="w3-button w3-black">Add Parking Space Details</button>
 </div>
 <% } %>
 <!-- Footer -->
 <script src="js/dropdownmenu.js"></script>
 
 <!-- The Modal -->
-
-</body>
-</html>

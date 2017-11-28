@@ -10,12 +10,13 @@ var spaceStatusSchema = new mongoose.Schema({
   },
   lotNumber: {
     type: Number,
-    unique: false,
+    unique: true,
     required: true,
     trim: true
   },
   status: {
     type: String,
+    unique: false,
     required: true,
     trim: true
   },
@@ -25,12 +26,9 @@ var spaceStatusSchema = new mongoose.Schema({
     trim:true
   },
   hoursOccupied: {
-    type: Date,
+    type: Number,
     required: true,
     trim:true
-  },
-  parkingSpace: {
-    type: Schema.ObjectId, ref: 'parkingSpace'
   }
 });
 

@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "artikcloud-js": "^4.0.0",
+    "asynch": "^0.5.2",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "connect-mongo": "^2.0.0",

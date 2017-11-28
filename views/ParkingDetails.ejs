@@ -4,6 +4,7 @@
 <head><title>Smart Tow</title>
 
 <meta charset="UTF-8">
+<meta http-equiv="refresh" content="60" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/font-awesome.min.css">
@@ -14,6 +15,18 @@ h1 {letter-spacing: 6px}
 .w3-row-padding img {margin-bottom: 12px}
 </style>
 <style>
+#trShow
+{
+  width: 80px;
+  height: 80px;
+  text-align: center;
+  background-color: white;
+  color:black;
+}
+#trHide
+{
+  width:30px;
+}
 ul {
     list-style-type: none;
     margin: 0;
@@ -38,10 +51,10 @@ li
 {
 	background-color: #919191;
 }
-#iframeBody
+/*#iframeBody
 {
 	background:url('images/road.jpg') no-repeat 89%
-}
+}*/
 a.button {
     -webkit-appearance: button;
     -moz-appearance: button;
@@ -52,6 +65,42 @@ a.button {
 }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+ 
+    // Run on page load
+    window.onload = function() {
+
+        // If sessionStorage is storing default values (ex. name), exit the function and do not restore data
+        if (localStorage.getItem('panel') == "panel") {
+            return;
+        }
+
+        // If values are not blank, restore them to the fields
+        var panel = localStorage.getItem('panel');
+        var a=document.getElementsByClassName("accordion");
+        var sendId="";
+        for(var i=0;i<a.length;i++)
+        {
+          if (panel==a[i].id)
+              sendId=panel;
+        }
+        if (sendId !== "") buttonclickedPark(sendId);
+
+        var zone = localStorage.getItem('zone');
+        if (zone !== null)
+          {
+            changeColor(zone);
+              callPostPage(zone);
+          }
+    }
+
+    // Before refreshing the page, save the form data to sessionStorage
+     window.onbeforeunload = function() {
+    localStorage.setItem("panel", $('#selectedPanel').val());
+    localStorage.setItem("zone", $('#selectedZone').val());
+    // ...
+}
+</script>
 </head>
 <body style="background: black;color: white">
   <header class="w3-panel w3-center w3-opacity">
@@ -63,45 +112,48 @@ a.button {
     	
       <a href='/parkingDetails' class="w3-bar-item w3-button w3-white" style="font-size: small;">Parking Spaces</a>
       <a href='/addTow' class="w3-bar-item w3-button " style="font-size: small;">Towing Company Details</a>
+     <a href="/addZone" class="w3-bar-item w3-button" style="font-size: small;">Zone Details</a>
+     
     </div>
     <div class="w3-bar w3-border" style="float: right;">
-    	<input type="button" class="w3-bar-item w3-button" id="toggle" value='Grid' style="font-size: small;" onclick="toggleView(this.id)"></input>    
+    	<input type="button" class="w3-bar-item w3-button" id="toggle" value='Toggle' style="font-size: small;" onclick="toggleView(this.id)"></input>    
     </div>
   </div></h1>
 </header>
 <div style="margin-top: -30px">
-	<iframe height="435px" width="83%" src="demo_iframe.htm" name="iframe_a" style="margin-left: 16%" id="iframeBody"></iframe>
-<div style="width: 15%;height: 100%;margin-left: 5px; margin-top:-436px;background-color: #919191;">
-	<button class="accordion" id="scu" onclick="buttonclicked(this.id)">Santa Clara University</button>
-<div class="panel">
-<!-- 	<button>West Side</button>
-	<button>East Side</button>
-	<button>North Side</button>
-	<button>South Side</button> -->
-	<!-- <a class="w3-bar-item w3-button" name="list" style="font-size: small;  width: -webkit-fill-available; " target="iframe_a" href="westside.html" 
-  id="westside"  onclick="changeColor(this.id)">West Side</a>
-  <a class="w3-bar-item w3-button" name="list" style="font-size: small; width: -webkit-fill-available;" href="eastside.html" target="iframe_a"
- id="eastside" onclick="changeColor(this.id)">East Side</a>
-  <a class="w3-bar-item w3-button" name="list" style="font-size: small; width: -webkit-fill-available;" href="northside.html" target="iframe_a"
- id="northside" onclick="changeColor(this.id)">North Side</a>
- <a class="w3-bar-item w3-button " name="list" style="font-size: small; width: -webkit-fill-available;" href="southside.html" target="iframe_a"
- id="southside" onclick="changeColor(this.id)">South Side</a> -->
-<% for(var i=0; i<ParkingSpace.length; i++) {%>
-<a class="w3-bar-item w3-button " name="list" style="font-size: small; width: -webkit-fill-available;" href="/parkingSpace" target="iframe_a" id='<%= ParkingSpace[i].name %>'  value="<%= ParkingSpace[i].name %>" onclick="changeColor(this.id);callPostPage(this.id)"><%= ParkingSpace[i].name %></a>
-<% } %>
+	<!-- <iframe height="435px" width="83%"  name="iframe_a" style="margin-left: 16%" id="iframeBody"></iframe> -->
+ <div style="width: 15%;height: 100%;margin-left: 5px; /*margin-top:-436px*/;background-color: #919191;">
+<% var spaceName = ParkingSpace[0].zone
+   %>
+  <button class="accordion" id="<%= spaceName %>" onclick="buttonclickedPark(this.id)"><%= spaceName %></button> 
+  <div class="panel">
+  <% for(var i=0; i<ParkingSpace.length; i++) {%>
+  <% if(spaceName != ParkingSpace[i].zone){spaceName = ParkingSpace[i].zone; %>
+   </div>
+   <button class="accordion" id="<%= spaceName %>" onclick="buttonclickedPark(this.id)"><%= spaceName %></button> 
+  <div class="panel">
+  <% } %>
+      <a class="w3-bar-item w3-button " name="list" style="font-size: small; width: -webkit-fill-available;" id='<%= ParkingSpace[i].name %>'  value="<%= ParkingSpace[i].name %>" onclick="changeColor(this.id);callPostPage(this.id)"><%= ParkingSpace[i].name %></a>
+       <% var zoneName=ParkingSpace[i].name;
+        var statusVal="";
+        for(var j=0; j<SpaceStatus.length; j++) {
+       if(zoneName==SpaceStatus[j].zoneName){
+
+       statusVal+=  SpaceStatus[j].zoneName+"::"+ SpaceStatus[j].lotNumber +"::"+ SpaceStatus[j].status +"::"+ SpaceStatus[j].hoursOccupied + "--" ; 
+ 
+      }} %>
+        <input type='hidden' id='<%= ParkingSpace[i].name %>_SpaceS'  value='<%=statusVal%>'>
+      <input type='hidden' id='<%= ParkingSpace[i].name %>_hidden'  value="<%= ParkingSpace[i].numberOfLots %>">
+  <% } %>
+</div>
+  
 <input type="hidden" id="parkSpace" value="">
+ <input type="hidden" name="selectedValue" id="selectedValue" value="">
+  <input type="hidden" name="selectedPanel" id="selectedPanel" value="">
+   <input type="hidden" name="selectedZone" id="selectedZone" value="">
 </div>
- <button class="accordion" id="pc" onclick="buttonclicked(this.id)">Par Central Apartments</button>
-<div class="panel">
-  <a class="w3-bar-item w3-button" name="list" style="font-size: small; width: -webkit-fill-available; " href="frontside.html" target="iframe_a" class="button" id="frontside" onclick="changeColor(this.id)">Front Side</a>
-  <a class="w3-bar-item w3-button" name="list" style="font-size: small; width: -webkit-fill-available; " href="backside.html" target="iframe_a" class="button" id="backside" onclick="changeColor(this.id)">Back Side</a>
-</div>
-<button class="accordion" id="Contact" onclick="buttonclicked(this.id)">Contact us</button>
-<div class="panel">
- <a class="w3-bar-item w3-button" name="list" style="font-size: small; width: -webkit-fill-available; " href="contactDetails.html" target="iframe_a" class="button" id="mphone" onclick="changeColor(this.id)">Mobile Phone</a>
-</div>
-<input type="hidden" name="selectedValue" id="selectedValue" value="">
-</div>
+ <div name="iframe_a" style="margin-left: 16% ; margin-top:-325px ;width: 83%;height: 457px;overflow: auto;" id="iframeBody"></div>
+
 </div>
 <script src="js/dropdownmenu.js"></script>
 </body>

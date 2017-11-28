@@ -5,8 +5,10 @@ var User = require('../models/user');
 var TowCompany = require('../models/towCompany');
 var ParkingSpace = require('../models/parkingSpace');
 var SpaceStatus = require('../models/spaceStatus');
+var Zone = require('../models/zone');
 var path = require('path');
 var app = require('express');
+var CloudData = require('../get-message');
 
 
 // GET route for reading data
@@ -14,7 +16,7 @@ router.get('/', function (req, res, next) {
   console.log("I am here");
   return res.sendFile(path.join(__dirname + '/views/index.html'));
 });
-
+  
 
 //POST route for updating data
 router.post('/', function (req, res, next) {
@@ -108,61 +110,158 @@ router.get('/addTow', function (req, res, next) {
   })
   
 });
-router.get('/parkingDetails', function (req, res, next) {
+/*router.get('/parkingDetails', function (req, res, next) {
+
   ParkingSpace.find({}, function(err, parkdata) {
     if(err) return console.log(err);
     console.log(parkdata);
     return res.render(path.resolve(__dirname + '/../views/ParkingDetails.ejs'),{ParkingSpace:parkdata});
   })
   
-});
-router.post('/parkingDetails', function (req, res, next) {
-  console.log('in parkingDetails post');
-/*  console.log(req.body.name);
-  if (req.body.name &&
-    req.body.location &&
-    req.body.address &&
-    req.body.contact) {
-
-    var towData = 
-       {
-      name: req.body.name,
-      location: req.body.location,
-      address: req.body.address,
-      contact: req.body.contact,
-    };*/
-    
-/*    TowCompany.create(towData, function (error, towdata) {
-      if (error) {
-        return next(error);
-      } else {
-        console.log(towdata);
-        return res.redirect('/addTow');
-      } 
-    });*/
-  /*}*/
-
-});
-router.get('/parkingSpace', function (req, res, next) {
-  console.log("in space status get")
-  console.log(req);
-  SpaceStatus.find({}, function(err, parkdata) {
+});*/
+router.get('/addZone', function (req, res, next) {
+  Zone.find({}, function(err, zoneData) {
     if(err) return console.log(err);
-    console.log(parkdata);
-    return res.render(path.resolve(__dirname + '/../views/ParkingSpace.ejs'),{SpaceStatus:parkdata});
+    console.log(zoneData);
+    return res.render(path.resolve(__dirname + '/../views/Zone.ejs'),{Zone:zoneData});
   })
   
 });
+router.post('/addZone', function (req, res, next) {
 
-/*router.post('/parkingSpace', function (req, res, next) {
-  console.log("in space status post")
-SpaceStatus.find({}, function(err, parkdata) {
+  console.log(req.body.name);
+  if (req.body.name) {
+
+    var zoneData = 
+       {
+      name: req.body.name,
+    };
+    
+ Zone.authenticate(req.body.name, function (error, zone) {
+      if (error || zone) {
+        var err = new Error('Zone already exists');
+        return res.redirect('/addZone');
+      } else {
+        req.session.userId = user._id;
+        return res.redirect('/addZone');
+      }
+    });
+    // towData.save(function(err){
+    //   if(err) throw err;
+    //   console.log("towdata created");
+    // });
+
+    Zone.create(zoneData, function (error, zoneData) {
+      if (error) {
+        return next(error);
+      } else {
+        console.log(zoneData);
+        return res.redirect('/addZone');
+      } 
+    });
+  }
+
+});
+
+router.post('/addZoneP', function (req, res, next) {
+
+console.log("abcdefg");
+  console.log(req.body.name);
+   console.log(req.body.noOfLots);
+    console.log(req.body.zoneName);
+    if (req.body.name &&
+    req.body.noOfLots &&
+    req.body.zoneName) {
+
+    var zonePData = 
+       {
+      name: req.body.name,
+      numberOfLots: req.body.noOfLots,
+      zone: req.body.zoneName,
+    };
+    
+/* Zone.authenticate(req.body.name, function (error, zone) {
+      if (error || zone) {
+        var err = new Error('Parking Space already exists');
+        return res.redirect('/addZone');
+      } else {
+        req.session.userId = user._id;
+        return res.redirect('/addZone');
+      }
+    });*/
+    // towData.save(function(err){
+    //   if(err) throw err;
+    //   console.log("towdata created");
+    // });
+console.log("ZONE DATA");
+        console.log(zonePData);
+    ParkingSpace.create(zonePData, function (error, zonePData) {
+      if (error) {
+        return next(error);
+      } else {
+         console.log("ZONE DATA");
+        console.log(zonePData);
+        return res.redirect('/addZone');
+      } 
+    });
+  }
+
+});
+
+router.get('/parkingDetails', function (req, res, next) {
+  var resultArray = {};
+  var deviceData = CloudData.data;
+  console.log(deviceData.data[0].data);
+var async = require('async');
+var tasks=[
+function(callback)
+{
+  ParkingSpace.find({}, function(err, parkdata) {
     if(err) return console.log(err);
-    console.log(parkdata);
+    /* console.log(parkdata);*/
+
+      resultArray.ParkingSpace=parkdata;
+      callback();
+  });
+},
+function(callback)
+{
+   SpaceStatus.find({}, function(err, spaceData) {
+    if(err) return console.log(err);
+     
+   /* console.log(spaceData);*/
+     resultArray.SpaceStatus=spaceData;
+      callback();
+     
+  });
+}
+];
+
+
+ async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+            if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+            // Here `locals` will be an object with `users` and `colors` keys
+            // Example: `locals = {users: [...], colors: [...]}`
+            res.render(path.resolve(__dirname + '/../views/ParkingDetails.ejs'),{ParkingSpace:resultArray.ParkingSpace, SpaceStatus:resultArray.SpaceStatus});
+        });
+     
+    //return res.render(path.resolve(__dirname + '/../views/ParkingDetails.ejs'),{ParkingSpace:parkData1, SpaceStatus:spaceData1});
+});
+
+router.post('/parkingDetails', function (req, res, next) {
+  console.log('in parkingDetails post');
+
+});
+
+router.post('/parkingSpace', function (req, res, next) {
+  console.log("in space status post");
+  var body=req.body;
+SpaceStatus.findOne({ 'parkingSpace': body.idA._id }, function(err, parkdata) {
+    if(err) return console.log(err);
     return res.render(path.resolve(__dirname + '/../views/ParkingSpace.ejs'),{SpaceStatus:parkdata});
   })
 
-});*/
+});
 // GET route after registering
 router.get('/profile', function (req, res, next) {
   User.findById(req.session.userId)
