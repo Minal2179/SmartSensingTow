@@ -10,6 +10,8 @@ var path = require('path');
 var app = require('express');
 var CloudData = require('../get-message');
 
+  var async = require('async');
+
 
 // GET route for reading data
 router.get('/', function (req, res, next) {
@@ -119,14 +121,7 @@ router.get('/addTow', function (req, res, next) {
   })
   
 });*/
-router.get('/addZone', function (req, res, next) {
-  Zone.find({}, function(err, zoneData) {
-    if(err) return console.log(err);
-    console.log(zoneData);
-    return res.render(path.resolve(__dirname + '/../views/Zone.ejs'),{Zone:zoneData});
-  })
-  
-});
+
 router.post('/addZone', function (req, res, next) {
 
   console.log(req.body.name);
@@ -180,19 +175,6 @@ console.log("abcdefg");
       zone: req.body.zoneName,
     };
     
-/* Zone.authenticate(req.body.name, function (error, zone) {
-      if (error || zone) {
-        var err = new Error('Parking Space already exists');
-        return res.redirect('/addZone');
-      } else {
-        req.session.userId = user._id;
-        return res.redirect('/addZone');
-      }
-    });*/
-    // towData.save(function(err){
-    //   if(err) throw err;
-    //   console.log("towdata created");
-    // });
 console.log("ZONE DATA");
         console.log(zonePData);
     ParkingSpace.create(zonePData, function (error, zonePData) {
@@ -208,15 +190,50 @@ console.log("ZONE DATA");
 
 });
 
+router.get('/addZone', function (req, res, next) {
+  var resultArray = {};
+  var zoneTask=[
+  function(callback)
+  {
+    ParkingSpace.find({}, function(err, parkdata) {
+      if(err) return console.log(err);
+    /* console.log(parkdata);*/
+
+      resultArray.ParkingSpace=parkdata;
+      callback();
+  });
+},
+function(callback)
+{
+   Zone.find({}, function(err, zoneData) {
+    if(err) return console.log(err);
+    console.log("ZONE DATA");
+    console.log(zoneData);
+    resultArray.Zone=zoneData;
+     callback();
+  });
+}
+];
+
+ async.parallel(zoneTask, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+            if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+            // Here `locals` will be an object with `users` and `colors` keys
+            // Example: `locals = {users: [...], colors: [...]}`
+            console.log("after here");
+            res.render(path.resolve(__dirname + '/../views/Zone.ejs'),{ParkingSpace:resultArray.ParkingSpace, Zone:resultArray.Zone});
+        });
+  
+});
+
 router.get('/parkingDetails', function (req, res, next) {
   var resultArray = {};
   var deviceData = CloudData.data;
   console.log(deviceData.data[0].data);
-var async = require('async');
 var tasks=[
 function(callback)
 {
-  ParkingSpace.find({}, function(err, parkdata) {
+
+  ParkingSpace.find({},null,{sort:{zone: 1}},function(err, parkdata) {
     if(err) return console.log(err);
     /* console.log(parkdata);*/
 

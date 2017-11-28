@@ -71,9 +71,9 @@ function callPostPage(id)
    //alert("ss="+ss);
    var divide=10;
    var col=Math.ceil(parkDetail/divide);
-var htmlBody="";
-htmlBody="<table>"+
-"<tr><td style='height:80px'></td></tr>";
+var htmlBody="<h1>Parking Area Layout</h1>";
+htmlBody+="<table style='width: 100%;''>"+
+"<tr><td style='height:20px'></td></tr>";
     var parkNo=1;
     var loop=(parkDetail<divide?parkDetail:divide);
  for(var i=1; i<=col; i++) 
@@ -81,16 +81,6 @@ htmlBody="<table>"+
      htmlBody+="<tr>";
     for(var j=1;j<=(loop<divide?loop:divide);j++)
     {
-      /*htmlBody+="<td class='trShow' id="+parkNo+">"+parkNo;
-                for(var k=0;k<spaceS.length;k++)
-                {
-                if(parkNo==spaceS[k].split("::")[1])
-                  {
-                    var ss=spaceS[k].split("::");
-                    htmlBody+="<br>Status: "+ss[2]+
-                            "<br>Hours Occupied: "+ss[3];
-                  }
-                }*/
                 var flag=false;
                 var ss=""
        for(var k=0;k<spaceS.length;k++)
@@ -169,7 +159,7 @@ function layout(){
     var divide=10;
     var col=Math.ceil(parkDetail/divide);
     var htmlBody="";
-    htmlBody="<table border='3' style='background-color: white; color: black;margin-top: 75px;'><tr><td>Parking Number</td><td>Status</td><td>Hours Occupied</td></tr>";
+    htmlBody="<h1>Parking Area Layout</h1><table border='1' style='background-color: white;width:100%; color: black;''><th>Parking Number</th><th>Status</th><th>Hours Occupied </th>";
     var parkNo=1;
     var loop=(parkDetail<divide?parkDetail:divide);
     for(var i=1; i<=col; i++) 
@@ -213,3 +203,8 @@ htmlBody+="</table>";
    document.getElementById('iframeBody').innerHTML=htmlBody;
 }
 
+function setValue()
+{
+  var x=document.getElementsByClassName("accordion active")[0].id;
+  document.getElementById('zoneVal').value=x;
+}

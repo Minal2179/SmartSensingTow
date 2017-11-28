@@ -122,7 +122,7 @@ a.button {
 </header>
 <div style="margin-top: -30px">
 	<!-- <iframe height="435px" width="83%"  name="iframe_a" style="margin-left: 16%" id="iframeBody"></iframe> -->
- <div style="width: 15%;height: 100%;margin-left: 5px; /*margin-top:-436px*/;background-color: #919191;">
+ <div style="width: 15%;height: 100%;margin-left: 5px;position: absolute; /*margin-top:-436px*/;background-color: #919191;">
 <% var spaceName = ParkingSpace[0].zone
    %>
   <button class="accordion" id="<%= spaceName %>" onclick="buttonclickedPark(this.id)"><%= spaceName %></button> 
@@ -152,9 +152,10 @@ a.button {
   <input type="hidden" name="selectedPanel" id="selectedPanel" value="">
    <input type="hidden" name="selectedZone" id="selectedZone" value="">
 </div>
- <div name="iframe_a" style="margin-left: 16% ; margin-top:-325px ;width: 83%;height: 457px;overflow: auto;" id="iframeBody"></div>
-
 </div>
+ <div name="iframe_a" style="margin-left: 18% ;width: 80%;height: 457px;overflow: auto;position:absolute;" id="iframeBody"></div>
+
+
 <script src="js/dropdownmenu.js"></script>
 </body>
 </html>
