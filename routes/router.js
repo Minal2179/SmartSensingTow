@@ -5,10 +5,13 @@ var User = require('../models/user');
 var TowCompany = require('../models/towCompany');
 var ParkingSpace = require('../models/parkingSpace');
 var SpaceStatus = require('../models/spaceStatus');
+var SpaceStatus1 = require('../models/spaceStatus');
 var Zone = require('../models/zone');
 var path = require('path');
 var app = require('express');
 var CloudData = require('../get-message');
+
+
 
   var async = require('async');
 
@@ -47,7 +50,7 @@ router.post('/', function (req, res, next) {
         return next(error);
       } else {
         req.session.userId = user._id;
-        return res.redirect('/profile');
+        return res.redirect('/ParkingDetails');
       }
     });
 
@@ -59,7 +62,7 @@ router.post('/', function (req, res, next) {
         return next(err);
       } else {
         req.session.userId = user._id;
-        return res.redirect('/profile');
+        return res.redirect('/ParkingDetails');
       }
     });
   } else {
@@ -227,9 +230,38 @@ function(callback)
 
 router.get('/parkingDetails', function (req, res, next) {
   var resultArray = {};
+
   var deviceData = CloudData.data;
+  console.log("abcd:");
   console.log(deviceData.data[0].data);
-var tasks=[
+  
+  var dataC=deviceData.data[0].data;
+
+var spaceCData = 
+       {
+        zoneName: "a",
+        parkingSpace:"Santa Clara University",
+        lotNumber: 1,
+        status: dataC.status,
+        carInTime: "10:00", 
+        hoursOccupied:5,
+    };
+      console.log("before1");
+console.log(spaceCData);
+console.log("before2");
+
+/*SpaceStatus.create(spaceCData, function (error, spaceCData) {
+      if (error) {
+        return next(error);
+      } else {
+         console.log("ZONE DATA");
+        console.log(spaceCData);
+        return res.redirect('/addZone');
+      } 
+    });*/
+
+
+  var tasks=[
 function(callback)
 {
 
@@ -241,19 +273,28 @@ function(callback)
       callback();
   });
 },
-function(callback)
+/*function(callback)
 {
    SpaceStatus.find({}, function(err, spaceData) {
     if(err) return console.log(err);
      
-   /* console.log(spaceData);*/
+    console.log(spaceData);
+console.log(spaceData);
      resultArray.SpaceStatus=spaceData;
       callback();
      
   });
-}
-];
+}*/
+function(callback)
+{
+ 
+      resultArray.SpaceStatus=spaceCData;
+      callback();
 
+}
+
+ 
+];
 
  async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
             if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function

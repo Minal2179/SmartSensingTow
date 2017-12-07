@@ -69,7 +69,6 @@ var callback = function(error, data, response) {
 };
 
 // console.log("> Making API call with data: " + JSON.stringify(opts));
-
 //make api call
 api.getLastNormalizedMessages(opts, callback);
 

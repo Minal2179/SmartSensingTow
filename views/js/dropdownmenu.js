@@ -178,7 +178,7 @@ function layout(){
                   }
                 } 
           var status="";
-          if(ss[2]=='empty' || ss[2]=='parked')
+          if(ss[2]=='empty' || ss[2]=='full')
             status=ss[2];
           else
             status='empty';

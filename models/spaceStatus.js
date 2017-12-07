@@ -8,6 +8,12 @@ var spaceStatusSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  parkingSpace: {
+    type: String,
+    unique: false,
+    required: true,
+    trim: true
+  },
   lotNumber: {
     type: Number,
     unique: true,

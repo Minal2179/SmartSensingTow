@@ -105,8 +105,8 @@ a.button {
 <body style="background: black;color: white">
   <header class="w3-panel w3-center w3-opacity">
 	 <h1 class="w3-xlarge">Parking Space
-	<div class="w3-bar w3-border" style="float: right;"><a href="MainPage1.html" class="w3-bar-item w3-button" style="float: right;font-size: small;">Back</a>
-    </div>
+	<!-- <div class="w3-bar w3-border" style="float: right;"><a href="MainPage1.html" class="w3-bar-item w3-button" style="float: right;font-size: small;">Back</a>
+    </div> -->
     <div class="w3-padding-32">
     <div class="w3-bar w3-border">
     	
@@ -123,7 +123,7 @@ a.button {
 <div style="margin-top: -30px">
 	<!-- <iframe height="435px" width="83%"  name="iframe_a" style="margin-left: 16%" id="iframeBody"></iframe> -->
  <div style="width: 15%;height: 100%;margin-left: 5px;position: absolute; /*margin-top:-436px*/;background-color: #919191;">
-<% var spaceName = ParkingSpace[0].zone
+<% var spaceName = ParkingSpace[0].zone;
    %>
   <button class="accordion" id="<%= spaceName %>" onclick="buttonclickedPark(this.id)"><%= spaceName %></button> 
   <div class="panel">
@@ -132,16 +132,14 @@ a.button {
    </div>
    <button class="accordion" id="<%= spaceName %>" onclick="buttonclickedPark(this.id)"><%= spaceName %></button> 
   <div class="panel">
-  <% } %>
+  <% } %>       
       <a class="w3-bar-item w3-button " name="list" style="font-size: small; width: -webkit-fill-available;" id='<%= ParkingSpace[i].name %>'  value="<%= ParkingSpace[i].name %>" onclick="changeColor(this.id);callPostPage(this.id)"><%= ParkingSpace[i].name %></a>
        <% var zoneName=ParkingSpace[i].name;
-        var statusVal="";
-        for(var j=0; j<SpaceStatus.length; j++) {
-       if(zoneName==SpaceStatus[j].zoneName){
-
-       statusVal+=  SpaceStatus[j].zoneName+"::"+ SpaceStatus[j].lotNumber +"::"+ SpaceStatus[j].status +"::"+ SpaceStatus[j].hoursOccupied + "--" ; 
- 
-      }} %>
+       var statusVal="";
+       if(zoneName==SpaceStatus.zoneName && spaceName==SpaceStatus.parkingSpace)
+       {
+         statusVal+=SpaceStatus.zoneName+"::"+SpaceStatus.lotNumber+"::"+SpaceStatus.status+"::"+SpaceStatus.hoursOccupied+"--";
+       }%>
         <input type='hidden' id='<%= ParkingSpace[i].name %>_SpaceS'  value='<%=statusVal%>'>
       <input type='hidden' id='<%= ParkingSpace[i].name %>_hidden'  value="<%= ParkingSpace[i].numberOfLots %>">
   <% } %>
